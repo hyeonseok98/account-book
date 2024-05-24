@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import tosim from "../../assets/꺄항 토심이.gif";
 import tosim2 from "../../assets/화이팅 토심이.png";
 
 const Section = styled.section`
@@ -16,8 +15,7 @@ const Section = styled.section`
 export default function SpendingGraph() {
   return (
     <Section>
-      <img src={tosim} alt="토심이" width="120px" height="120px" />
-      <img src={tosim2} alt="토심이2" width="120px" height="120px" />
+      <img src={tosim2} alt="파이팅 토심이" width="120px" height="120px" />
     </Section>
   );
 }

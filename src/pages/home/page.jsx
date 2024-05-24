@@ -10,14 +10,12 @@ const Main = styled.main`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding: 32px;
+  justify-content: flex-start;
   gap: 20px;
 `;
 
 export default function HomePage({ spendingLists, setSpendingsLists }) {
-  const [selectedMonth, setSelectedMonth] = useState(5);
-
+  const [selectedMonth, setSelectedMonth] = useState(2);
   return (
     <Main>
       <AddSpending
@@ -30,7 +28,10 @@ export default function HomePage({ spendingLists, setSpendingsLists }) {
         setSelectedMonth={setSelectedMonth}
       />
       <SpendingGraph />
-      <SpendingLists />
+      <SpendingLists
+        spendingLists={spendingLists}
+        selectedMonth={selectedMonth}
+      />
     </Main>
   );
 }

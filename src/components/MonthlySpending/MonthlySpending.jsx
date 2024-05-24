@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import styled from "styled-components";
 
 const Section = styled.section`
@@ -16,7 +17,7 @@ const ButtonWrapper = styled.div`
 `;
 
 const Button = styled.button`
-  width: 100px;
+  width: 104px;
   height: 60px;
   border: none;
   border-radius: 10px;
@@ -36,7 +37,15 @@ const MONTHS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 export default function MonthlySpending({ selectedMonth, setSelectedMonth }) {
   const handleChangeMonth = (month) => {
     setSelectedMonth(month);
+    localStorage.setItem("selectedMonth", month);
   };
+
+  useEffect(() => {
+    const storedMonth = localStorage.getItem("selectedMonth");
+    if (storedMonth) {
+      setSelectedMonth(parseInt(storedMonth));
+    }
+  });
 
   return (
     <Section>

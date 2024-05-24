@@ -24,21 +24,24 @@ const GlobalStyles = createGlobalStyle`
   overflow-wrap: break-word;
 }
 
-#root {
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
 
 html,
 body {
-  height: 100%;
+  width: 100%;
+  min-height: 100vh;
   font-size: 62.5%;
 }
 
 body {
   background-color: #2ec4b6;
+}
+
+
+#root {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
 }
 
 img,
@@ -66,7 +69,8 @@ table {
 }
 
 ol,
-ul {
+ul, 
+li {
   list-style: none;
 }
 `;

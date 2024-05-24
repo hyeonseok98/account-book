@@ -14,13 +14,13 @@ const Section = styled.section`
 const Form = styled.form`
   display: flex;
   justify-content: space-between;
-  width: 100%;
-  align-items: center;
 `;
 
 const Button = styled.button`
-  padding: 7px 20px;
-  margin-top: 16px;
+  width: 23%;
+  height: 36px;
+  padding: 6px 20px;
+  margin-top: 20px;
   border: none;
   border-radius: 4px;
   font-size: 1.4rem;
@@ -63,20 +63,23 @@ export default function AddSpending({
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const paymentDate = paymentDateRef.current.value;
-    const itemCategory = itemCategoryRef.current.value.trim();
-    const expenseAmount = expenseAmountRef.current.value;
-    const expenseDetail = expenseDetailRef.current.value.trim();
+    const date = paymentDateRef.current.value;
+    const item = itemCategoryRef.current.value.trim();
+    const amount = Number(expenseAmountRef.current.value);
+    const description = expenseDetailRef.current.value.trim();
 
-    console.log(paymentDateRef.current.value);
+    localStorage.setItem("month", amount);
     handleAddSpendings({
       id: uuidv4(),
-      paymentDate,
-      itemCategory,
-      expenseAmount,
-      expenseDetail,
+      date,
+      item,
+      amount,
+      description,
     });
-    paymentDateRef.current.value = `2024-0${selectedMonth}-01`;
+    paymentDateRef.current.value =
+      selectedMonth >= 10
+        ? `2024-${selectedMonth}-01`
+        : `2024-0${selectedMonth}-01`;
     itemCategoryRef.current.value = "";
     expenseAmountRef.current.value = "";
     expenseDetailRef.current.value = "";
