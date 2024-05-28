@@ -3,37 +3,6 @@ import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 import { Input } from "../Commons/Input";
 
-const Section = styled.section`
-  width: 800px;
-  height: 95px;
-  border-radius: 16px;
-  padding: 20px;
-  background-color: #fff;
-`;
-
-const Form = styled.form`
-  display: flex;
-  justify-content: space-between;
-`;
-
-const Button = styled.button`
-  width: 23%;
-  height: 36px;
-  padding: 6px 20px;
-  margin-top: 20px;
-  border: none;
-  border-radius: 4px;
-  font-size: 1.4rem;
-  cursor: pointer;
-  color: #fff;
-  background-color: #007bff;
-  transition: background-color 0.2s ease-in-out 0s;
-
-  &:hover {
-    background-color: #005aba;
-  }
-`;
-
 export default function AddSpending({
   spendingLists,
   setSpendingsLists,
@@ -67,6 +36,10 @@ export default function AddSpending({
     const item = itemCategoryRef.current.value.trim();
     const amount = Number(expenseAmountRef.current.value);
     const description = expenseDetailRef.current.value.trim();
+    if (!(item && amount >= 0 && description)) {
+      alert("유효한 항목과 0원 이상의 금액을 입력해주세요.");
+      return;
+    }
 
     localStorage.setItem("month", amount);
     handleAddSpendings({
@@ -76,6 +49,7 @@ export default function AddSpending({
       amount,
       description,
     });
+
     paymentDateRef.current.value =
       selectedMonth >= 10
         ? `2024-${selectedMonth}-01`
@@ -117,3 +91,34 @@ export default function AddSpending({
     </Section>
   );
 }
+
+const Section = styled.section`
+  width: 800px;
+  height: 95px;
+  border-radius: 16px;
+  padding: 20px;
+  background-color: #fff;
+`;
+
+const Form = styled.form`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const Button = styled.button`
+  width: 23%;
+  height: 36px;
+  padding: 6px 20px;
+  margin-top: 20px;
+  border: none;
+  border-radius: 4px;
+  font-size: 1.4rem;
+  cursor: pointer;
+  color: #fff;
+  background-color: #007bff;
+  transition: background-color 0.2s ease-in-out 0s;
+
+  &:hover {
+    background-color: #005aba;
+  }
+`;

@@ -5,15 +5,6 @@ import MonthlySpending from "../../components/MonthlySpending";
 import SpendingGraph from "../../components/SpendingGraph";
 import SpendingLists from "../../components/SpendingLists";
 
-const Main = styled.main`
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 20px;
-`;
-
 export default function HomePage({ spendingLists, setSpendingsLists }) {
   const [selectedMonth, setSelectedMonth] = useState(2);
   return (
@@ -35,3 +26,12 @@ export default function HomePage({ spendingLists, setSpendingsLists }) {
     </Main>
   );
 }
+
+const Main = styled.main`
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 20px;
+`;

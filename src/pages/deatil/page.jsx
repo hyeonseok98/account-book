@@ -3,38 +3,6 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { Input } from "../../components/Commons/Input";
 
-const Section = styled.section`
-  width: 800px;
-  border-radius: 16px;
-  padding: 20px;
-  background-color: #fff;
-`;
-
-const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  align-items: flex-start;
-`;
-
-const Button = styled.button`
-  padding: 8px 20px;
-  margin-top: 10px;
-  margin-right: 10px;
-  border: none;
-  border-radius: 4px;
-  color: #fff;
-  font-size: 1.4rem;
-  filter: brightness(1);
-  background-color: ${(props) => props.$backgroundColor || "#007bff"};
-  transition: filter 0.2s ease-in-out 0s;
-  cursor: pointer;
-
-  &:hover {
-    filter: brightness(0.8);
-  }
-`;
-
 export default function DetailPage({ spendingLists, setSpendingsLists }) {
   const navigate = useNavigate();
 
@@ -62,8 +30,15 @@ export default function DetailPage({ spendingLists, setSpendingsLists }) {
     e.preventDefault();
     const date = paymentDateRef.current.value;
     const item = itemCategoryRef.current.value.trim();
-    const amount = Number(expenseAmountRef.current.value);
+    const amount = expenseAmountRef.current.value.trim();
     const description = expenseDetailRef.current.value.trim();
+    
+    const numberReg = /^[0-9]+$/;
+    if (!numberReg.test(amount)) {
+      alert("금액은 숫자만 입력해주세요");
+      expenseAmountRef.current.focus();
+      return;
+    }
 
     const findEqualIdList = spendingLists.map((spendingList) => {
       if (spendingList.id === currentId) {
@@ -158,3 +133,35 @@ export default function DetailPage({ spendingLists, setSpendingsLists }) {
     </Section>
   );
 }
+
+const Section = styled.section`
+  width: 800px;
+  border-radius: 16px;
+  padding: 20px;
+  background-color: #fff;
+`;
+
+const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: flex-start;
+`;
+
+const Button = styled.button`
+  padding: 8px 20px;
+  margin-top: 10px;
+  margin-right: 10px;
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  font-size: 1.4rem;
+  filter: brightness(1);
+  background-color: ${(props) => props.$backgroundColor || "#007bff"};
+  transition: filter 0.2s ease-in-out 0s;
+  cursor: pointer;
+
+  &:hover {
+    filter: brightness(0.8);
+  }
+`;
