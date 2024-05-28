@@ -1,20 +1,21 @@
-import { useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { useContext, useEffect, useRef } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { Input } from "../../components/Commons/Input";
+import { SpendingContext } from "../../context/SpendingContext";
 
-export default function DetailPage({ spendingLists, setSpendingsLists }) {
+export default function DetailPage() {
   const navigate = useNavigate();
+  const { spendingLists, setSpendingsLists } = useContext(SpendingContext);
+  const { id } = useParams();
 
   const paymentDateRef = useRef(null);
   const itemCategoryRef = useRef(null);
   const expenseAmountRef = useRef(null);
   const expenseDetailRef = useRef(null);
-  const currentURL = new URL(window.location.href);
-  const currentId = currentURL.pathname.split("/").pop();
 
   const filteredList = spendingLists.filter((spendingList) => {
-    return spendingList.id === currentId;
+    return spendingList.id === id;
   });
 
   useEffect(() => {
@@ -32,7 +33,7 @@ export default function DetailPage({ spendingLists, setSpendingsLists }) {
     const item = itemCategoryRef.current.value.trim();
     const amount = expenseAmountRef.current.value.trim();
     const description = expenseDetailRef.current.value.trim();
-    
+
     const numberReg = /^[0-9]+$/;
     if (!numberReg.test(amount)) {
       alert("금액은 숫자만 입력해주세요");
@@ -41,7 +42,7 @@ export default function DetailPage({ spendingLists, setSpendingsLists }) {
     }
 
     const findEqualIdList = spendingLists.map((spendingList) => {
-      if (spendingList.id === currentId) {
+      if (spendingList.id === id) {
         return {
           ...spendingList,
           date: date,
@@ -64,7 +65,7 @@ export default function DetailPage({ spendingLists, setSpendingsLists }) {
     if (!confirmDelete) return;
 
     const filteredSpendingList = spendingLists.filter(
-      (spendingList) => currentId != spendingList.id
+      (spendingList) => id != spendingList.id
     );
     setSpendingsLists(filteredSpendingList);
 
@@ -72,7 +73,7 @@ export default function DetailPage({ spendingLists, setSpendingsLists }) {
   };
 
   const handleGoBackPage = () => {
-    navigate("/");
+    navigate(-1);
   };
 
   return (

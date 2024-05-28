@@ -1,8 +1,13 @@
+import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { SelectedMonthContext } from "../../context/SelectedMonthContext";
+import { SpendingContext } from "../../context/SpendingContext";
 import SpendingDetail from "../SpendingDetail/SpendingDetail";
 
-export default function SpendingLists({ spendingLists, selectedMonth }) {
+export default function SpendingLists() {
+  const { spendingLists } = useContext(SpendingContext);
+  const { selectedMonth } = useContext(SelectedMonthContext);
   const navigate = useNavigate();
 
   const handleMoveDetailPage = (id) => {

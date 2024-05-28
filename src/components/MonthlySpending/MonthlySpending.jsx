@@ -1,20 +1,15 @@
-import { useEffect } from "react";
+import { useContext } from "react";
 import styled from "styled-components";
+import { SelectedMonthContext } from "../../context/SelectedMonthContext";
 
 const MONTHS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
-export default function MonthlySpending({ selectedMonth, setSelectedMonth }) {
+export default function MonthlySpending() {
+  const { selectedMonth, setSelectedMonth } = useContext(SelectedMonthContext);
+
   const handleChangeMonth = (month) => {
     setSelectedMonth(month);
-    localStorage.setItem("selectedMonth", month);
   };
-
-  useEffect(() => {
-    const storedMonth = localStorage.getItem("selectedMonth");
-    if (storedMonth) {
-      setSelectedMonth(parseInt(storedMonth));
-    }
-  });
 
   return (
     <Section>

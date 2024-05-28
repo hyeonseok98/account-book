@@ -1,13 +1,14 @@
-import { useEffect, useRef } from "react";
+import { useContext, useEffect, useRef } from "react";
 import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
+import { SelectedMonthContext } from "../../context/SelectedMonthContext";
+import { SpendingContext } from "../../context/SpendingContext";
 import { Input } from "../Commons/Input";
 
-export default function AddSpending({
-  spendingLists,
-  setSpendingsLists,
-  selectedMonth,
-}) {
+export default function AddSpending() {
+  const { spendingLists, setSpendingsLists } = useContext(SpendingContext);
+  const { selectedMonth } = useContext(SelectedMonthContext);
+
   const paymentDateRef = useRef(null);
   const itemCategoryRef = useRef(null);
   const expenseAmountRef = useRef(null);
