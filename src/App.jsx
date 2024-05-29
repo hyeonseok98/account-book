@@ -1,16 +1,14 @@
+import { Provider } from "react-redux";
 import { RouterProvider } from "react-router-dom";
-import { SelectedMonthProvider } from "./context/SelectedMonthContext"; // 수정된 부분
-import { SpendingProvider } from "./context/SpendingContext";
+import store from "./redux/configStore";
 import router from "./routes/router";
 
-function App() {
+const App = () => {
   return (
-    <SpendingProvider>
-      <SelectedMonthProvider>
-        <RouterProvider router={router} />
-      </SelectedMonthProvider>
-    </SpendingProvider>
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
   );
-}
+};
 
 export default App;

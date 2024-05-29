@@ -1,14 +1,12 @@
-import { useContext } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { SelectedMonthContext } from "../../context/SelectedMonthContext";
-import { SpendingContext } from "../../context/SpendingContext";
 import SpendingDetail from "../SpendingDetail/SpendingDetail";
 
 export default function SpendingLists() {
-  const { spendingLists } = useContext(SpendingContext);
-  const { selectedMonth } = useContext(SelectedMonthContext);
   const navigate = useNavigate();
+  const spendingLists = useSelector((state) => state.spendings.spendingLists);
+  const selectedMonth = useSelector((state) => state.spendings.selectedMonth);
 
   const handleMoveDetailPage = (id) => {
     navigate(`/spending/${id}`);

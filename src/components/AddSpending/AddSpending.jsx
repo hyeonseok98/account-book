@@ -1,13 +1,13 @@
-import { useContext, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
-import { SelectedMonthContext } from "../../context/SelectedMonthContext";
-import { SpendingContext } from "../../context/SpendingContext";
+import { addSpending } from "../../redux/slices/spending.slice";
 import { Input } from "../Commons/Input";
 
 export default function AddSpending() {
-  const { spendingLists, setSpendingsLists } = useContext(SpendingContext);
-  const { selectedMonth } = useContext(SelectedMonthContext);
+  const dispatch = useDispatch();
+  const selectedMonth = useSelector((state) => state.spendings.selectedMonth);
 
   const paymentDateRef = useRef(null);
   const itemCategoryRef = useRef(null);
@@ -27,10 +27,6 @@ export default function AddSpending() {
     setInitialDate();
   }, [selectedMonth]);
 
-  const handleAddSpendings = (newSpendings) => {
-    setSpendingsLists([...spendingLists, newSpendings]);
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
     const date = paymentDateRef.current.value;
@@ -42,14 +38,15 @@ export default function AddSpending() {
       return;
     }
 
-    localStorage.setItem("month", amount);
-    handleAddSpendings({
-      id: uuidv4(),
-      date,
-      item,
-      amount,
-      description,
-    });
+    dispatch(
+      addSpending({
+        id: uuidv4(),
+        date,
+        item,
+        amount,
+        description,
+      })
+    );
 
     paymentDateRef.current.value =
       selectedMonth >= 10

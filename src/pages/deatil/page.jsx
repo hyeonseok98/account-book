@@ -1,13 +1,19 @@
-import { useContext, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { Input } from "../../components/Commons/Input";
-import { SpendingContext } from "../../context/SpendingContext";
+import {
+  deleteSpending,
+  updateSpending,
+} from "../../redux/slices/spending.slice";
 
 export default function DetailPage() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { spendingLists, setSpendingsLists } = useContext(SpendingContext);
   const { id } = useParams();
+
+  const spendingLists = useSelector((state) => state.spendings.spendingLists);
 
   const paymentDateRef = useRef(null);
   const itemCategoryRef = useRef(null);
@@ -25,36 +31,31 @@ export default function DetailPage() {
       expenseAmountRef.current.value = detailItem.amount;
       expenseDetailRef.current.value = detailItem.description;
     });
-  });
+  }, [filteredList]);
 
   const handleUpdateSpending = (e) => {
     e.preventDefault();
     const date = paymentDateRef.current.value;
     const item = itemCategoryRef.current.value.trim();
-    const amount = expenseAmountRef.current.value.trim();
+    const amount = Number(expenseAmountRef.current.value);
     const description = expenseDetailRef.current.value.trim();
 
-    const numberReg = /^[0-9]+$/;
-    if (!numberReg.test(amount)) {
+    if (isNaN(amount)) {
       alert("금액은 숫자만 입력해주세요");
       expenseAmountRef.current.focus();
       return;
     }
 
-    const findEqualIdList = spendingLists.map((spendingList) => {
-      if (spendingList.id === id) {
-        return {
-          ...spendingList,
-          date: date,
-          item: item,
-          amount: amount,
-          description: description,
-        };
-      }
-      return spendingList;
-    });
+    dispatch(
+      updateSpending({
+        id,
+        date,
+        item,
+        amount,
+        description,
+      })
+    );
 
-    setSpendingsLists(findEqualIdList);
     navigate("/");
   };
 
@@ -64,11 +65,7 @@ export default function DetailPage() {
     );
     if (!confirmDelete) return;
 
-    const filteredSpendingList = spendingLists.filter(
-      (spendingList) => id != spendingList.id
-    );
-    setSpendingsLists(filteredSpendingList);
-
+    dispatch(deleteSpending(id));
     navigate("/");
   };
 
